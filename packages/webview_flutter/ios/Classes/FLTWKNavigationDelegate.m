@@ -66,6 +66,15 @@
   [_methodChannel invokeMethod:@"onPageFinished" arguments:@{@"url" : webView.URL.absoluteString}];
 }
 
+- (void)webView:(WKWebView *)webView didReceiveAuthenticationChallenge:(nonnull NSURLAuthenticationChallenge *)challenge completionHandler:(nonnull void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler {
+    if (self.ignoreSslCertificateErrors) {
+        NSURLCredential * credential = [[NSURLCredential alloc] initWithTrust:[challenge protectionSpace].serverTrust];
+        completionHandler(NSURLSessionAuthChallengeUseCredential, credential);
+        return;
+    }
+    completionHandler(NSURLSessionAuthChallengePerformDefaultHandling, NULL);
+}
+
 + (id)errorCodeToString:(NSUInteger)code {
   switch (code) {
     case WKErrorUnknown:

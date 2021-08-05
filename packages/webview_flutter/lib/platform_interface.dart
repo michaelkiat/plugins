@@ -396,6 +396,7 @@ class WebSettings {
     this.debuggingEnabled,
     this.gestureNavigationEnabled,
     this.allowsInlineMediaPlayback,
+    this.ignoreSslCertificateErrors,
     required this.userAgent,
   }) : assert(userAgent != null);
 
@@ -434,9 +435,12 @@ class WebSettings {
   /// See also: [WebView.gestureNavigationEnabled]
   final bool? gestureNavigationEnabled;
 
+  /// Whether to ignore SSL certificate errors.
+  final bool? ignoreSslCertificateErrors;
+
   @override
   String toString() {
-    return 'WebSettings(javascriptMode: $javascriptMode, hasNavigationDelegate: $hasNavigationDelegate, hasProgressTracking: $hasProgressTracking, debuggingEnabled: $debuggingEnabled, gestureNavigationEnabled: $gestureNavigationEnabled, userAgent: $userAgent, allowsInlineMediaPlayback: $allowsInlineMediaPlayback)';
+    return 'WebSettings(javascriptMode: $javascriptMode, hasNavigationDelegate: $hasNavigationDelegate, hasProgressTracking: $hasProgressTracking, debuggingEnabled: $debuggingEnabled, gestureNavigationEnabled: $gestureNavigationEnabled, userAgent: $userAgent, allowsInlineMediaPlayback: $allowsInlineMediaPlayback, ignoreSslCertificateErrors: $ignoreSslCertificateErrors)';
   }
 }
 

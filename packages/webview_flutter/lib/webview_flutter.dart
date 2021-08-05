@@ -231,9 +231,11 @@ class WebView extends StatefulWidget {
     this.initialMediaPlaybackPolicy =
         AutoMediaPlaybackPolicy.require_user_action_for_all_media_types,
     this.allowsInlineMediaPlayback = false,
+    this.ignoreSslCertificateErrors = false,
   })  : assert(javascriptMode != null),
         assert(initialMediaPlaybackPolicy != null),
         assert(allowsInlineMediaPlayback != null),
+        assert(ignoreSslCertificateErrors != null),
         super(key: key);
 
   static WebViewPlatform? _platform;
@@ -415,6 +417,13 @@ class WebView extends StatefulWidget {
   /// The default policy is [AutoMediaPlaybackPolicy.require_user_action_for_all_media_types].
   final AutoMediaPlaybackPolicy initialMediaPlaybackPolicy;
 
+  /// Determines whether errors with SSL certificates should be ignored.
+  ///
+  /// If `true`, problems with SSL certificates will be ignored. This is generally useful only in development scenarios
+  /// where self-signed certificates are commonly used. It is strongly recommended to leave this as `false` in
+  /// production scenarios.
+  final bool ignoreSslCertificateErrors;
+
   @override
   State<StatefulWidget> createState() => _WebViewState();
 }
@@ -491,6 +500,7 @@ WebSettings _webSettingsFromWidget(WebView widget) {
     gestureNavigationEnabled: widget.gestureNavigationEnabled,
     allowsInlineMediaPlayback: widget.allowsInlineMediaPlayback,
     userAgent: WebSetting<String?>.of(widget.userAgent),
+    ignoreSslCertificateErrors: widget.ignoreSslCertificateErrors,
   );
 }
 
@@ -506,11 +516,13 @@ WebSettings _clearUnchangedWebSettings(
   assert(newValue.hasNavigationDelegate != null);
   assert(newValue.debuggingEnabled != null);
   assert(newValue.userAgent != null);
+  assert(newValue.ignoreSslCertificateErrors != null);
 
   JavascriptMode? javascriptMode;
   bool? hasNavigationDelegate;
   bool? hasProgressTracking;
   bool? debuggingEnabled;
+  bool? ignoreSslCertificateErrors;
   WebSetting<String?> userAgent = WebSetting.absent();
   if (currentValue.javascriptMode != newValue.javascriptMode) {
     javascriptMode = newValue.javascriptMode;
@@ -527,6 +539,10 @@ WebSettings _clearUnchangedWebSettings(
   if (currentValue.userAgent != newValue.userAgent) {
     userAgent = newValue.userAgent;
   }
+  if (currentValue.ignoreSslCertificateErrors !=
+      newValue.ignoreSslCertificateErrors) {
+    ignoreSslCertificateErrors = newValue.ignoreSslCertificateErrors;
+  }
 
   return WebSettings(
     javascriptMode: javascriptMode,
@@ -534,6 +550,7 @@ WebSettings _clearUnchangedWebSettings(
     hasProgressTracking: hasProgressTracking,
     debuggingEnabled: debuggingEnabled,
     userAgent: userAgent,
+    ignoreSslCertificateErrors: ignoreSslCertificateErrors,
   );
 }
 
