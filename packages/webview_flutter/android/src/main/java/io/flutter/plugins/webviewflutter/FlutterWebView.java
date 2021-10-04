@@ -108,6 +108,10 @@ public class FlutterWebView implements PlatformView, MethodCallHandler {
     webView.getSettings().setBuiltInZoomControls(true);
     // Hide buttons.
     webView.getSettings().setDisplayZoomControls(false);
+    // Attempt to load in fully zoomed out mode
+    webView.getSettings().setLoadWithOverviewMode(true);
+    webView.getSettings().setUseWideViewPort(true);
+    
     webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
 
     // Multi windows is set with FlutterWebChromeClient by default to handle internal bug: b/159892679.
