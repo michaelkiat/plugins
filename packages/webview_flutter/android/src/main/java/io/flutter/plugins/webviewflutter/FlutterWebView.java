@@ -111,7 +111,9 @@ public class FlutterWebView implements PlatformView, MethodCallHandler {
     // Attempt to load in fully zoomed out mode
     webView.getSettings().setLoadWithOverviewMode(true);
     webView.getSettings().setUseWideViewPort(true);
-    webView.setInitialScale(1);
+    // webView.setInitialScale(1);
+    webview.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
+
     
     webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
 
